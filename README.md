@@ -5,18 +5,16 @@ A simple tool used to inject typed input from one virtual terminal to another.
 ## Build
 
 ```
-  make
+make
 ```
 
 ## Usage
 
 ```
-  ./ttyinject /dev/tty1
+./ttyinject /dev/tty1
 ```
 
 Then you can start typing. Look on the target terminal and see if it's working.
-
-It's
 
 You can press twice the <kbd>ESC</kbd> key to exit the program.
 
