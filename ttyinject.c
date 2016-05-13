@@ -14,9 +14,12 @@ int main(int argc, char *argv[]) {
   char pc;
   int fd;
   int ret;
+  int rc;
   struct termios old_term;
   struct termios term;
   struct pollfd fds[1];
+  rc = 0;
+  pc = 0;
   if (argc != 2) {
     printf("Usage:\n  %s /dev/tty1\n  %s /dev/pts/3\n", argv[0], argv[0]);
     exit(1);
@@ -32,17 +35,18 @@ int main(int argc, char *argv[]) {
   tcsetattr(0, TCSANOW, &term);
   fds[0].fd = STDIN_FILENO;
   fds[0].events = POLLIN;
-  pc = 0;
   for (;;) {
     ret = poll(fds, 1, 200);
     if (ret < 0) {
       perror("poll() failed");
+      rc = 1;
       break;
     }
     if(fds[0].revents == POLLIN) {
       ret = read(0, &c, sizeof(c));
       if (ret != 1) {
         perror("read() failed");
+        rc = 1;
         break;
       }
       if (c == 27 && pc == 27) break;
@@ -50,12 +54,14 @@ int main(int argc, char *argv[]) {
       if (ret == -1) {
         if (errno == 1) {
           fprintf(stderr, "%s: try running as root\n", strerror(errno));
+          rc = 1;
           break;
         }
         if (fcntl(fd, F_GETFD) == 0) close(fd);
         fd = open(argv[1], O_RDWR);
         if(fd < 0) {
           perror("open() failed");
+          rc = 1;
           break;
         }
         ioctl(fd, TIOCSTI, &c);
@@ -65,4 +71,5 @@ int main(int argc, char *argv[]) {
   }
   tcsetattr(0, TCSANOW, &old_term);
   close(fd);
+  return rc;
 }
