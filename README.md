@@ -14,7 +14,7 @@ make
 ./ttyinject /dev/tty1
 ```
 
-Then you can start typing. Look on the target terminal and see if it's working.
+Now you can start typing. Look at the target terminal and see if it's working.
 
 You can press twice the <kbd>ESC</kbd> key to exit the program.
 
