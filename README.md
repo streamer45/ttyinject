@@ -16,10 +16,15 @@ make
 
 Then you can start typing. Look on the target terminal and see if it's working.
 
-You can press twice the <kbd>ESC</kbd> key to exit the program.
+You can press the <kbd>ESC</kbd> key twice to exit the program.
 
 ## Why?
 
 I couldn't find a USB keyboard to plug into a Raspberry Pi.
 
 I launched this on the pi through SSH so I could write on the main console just like if my laptop's keyboard was attached to the board.
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
+
